@@ -14,6 +14,8 @@ from torchgpipe.skip.layout import inspect_skip_layout
 from torchgpipe.skip.skippable import verify_skippables
 from torchgpipe.stream import AbstractStream, new_stream
 
+import torch_gcu
+
 __all__ = ['GPipe']
 
 
@@ -242,7 +244,7 @@ class GPipe(Module):
             module = DeferredBatchNorm.convert_deferred_batch_norm(module, chunks)
 
         if devices is None:
-            devices = range(torch.cuda.device_count())
+            devices = range(torch_gcu.device_count())
         devices = [torch.device(d) for d in devices]
         devices = cast(List[torch.device], devices)
 
